@@ -23,6 +23,10 @@ public class User {
     @Column
     private LocalDateTime createdAt;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private UserProfile userProfile;
+
     public User() {
     }
 

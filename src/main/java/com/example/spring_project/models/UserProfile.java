@@ -1,5 +1,7 @@
 package com.example.spring_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,10 @@ public class UserProfile {
 
     @Column
     private String lastName;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "userProfile")
+    private User user;
 
     public UserProfile() {
     }
