@@ -1,5 +1,7 @@
 package com.example.spring_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -19,6 +21,11 @@ public class Image {
 
     @Column
     private Long views;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     public Image() {
     }
