@@ -1,6 +1,7 @@
 package com.example.spring_project.models;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +19,9 @@ public class User {
 
     @Column
     private String password;
+
+    @Column
+    private LocalDateTime createdAt;
 
     public User() {
     }
