@@ -1,4 +1,4 @@
-package com.example.spring_project.services;
+package com.example.spring_project.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class jwtUtil {
+public class JwtUtils {
     private String SECRET_KEY = "secret";
 
     public String extractUsername(String token) {
