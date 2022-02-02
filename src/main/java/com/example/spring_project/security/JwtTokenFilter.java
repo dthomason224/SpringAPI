@@ -40,7 +40,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUserNameFromJwtToken(jwt);
 
-                UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                        userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -50,6 +50,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }catch (Exception e){
             System.out.println("Cannot set user authentication token " + e);
         }
+        filterChain.doFilter(request, response);
     }
 
     private String parseJwt(HttpServletRequest request) {

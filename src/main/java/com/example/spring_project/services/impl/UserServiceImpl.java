@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
@@ -48,9 +49,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmailAddress(String email) {
-        return userRepository.findByEmailAddress(email);
+        return userRepository.findUserByEmailAddress(email);
     }
 
+    @Override
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
         if (userRepository.existsByEmailAddress(registerRequest.getEmail())){
             return ResponseEntity
@@ -58,13 +60,15 @@ public class UserServiceImpl implements UserService {
                     .body("user exists already");
         }
 
-        User user = new User(registerRequest.getUsername(), registerRequest.getEmail(),
-                passwordEncoder.encode(registerRequest.getPassword()));
+        User user = new User();
+
+        user.setUsername(registerRequest.getUsername());
+        user.setEmailAddress(registerRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setCreatedAt(registerRequest.getCreatedAt());
 
         userRepository.save(user);
 
         return ResponseEntity.ok("User created");
     }
-
-
 }

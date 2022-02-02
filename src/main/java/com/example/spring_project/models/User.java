@@ -3,7 +3,7 @@ package com.example.spring_project.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,7 +17,7 @@ public class User {
     @Column
     private String username;
 
-    @Column
+    @Column(unique = true)
     private String emailAddress;
 
     @Column
@@ -25,7 +25,7 @@ public class User {
     private String password;
 
     @Column
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
@@ -37,10 +37,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String emailAddress, String password) {
+    public User(String username, String emailAddress, String password, LocalDate createdAt) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -73,5 +74,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 }
