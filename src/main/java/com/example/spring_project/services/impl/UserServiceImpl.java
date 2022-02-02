@@ -1,14 +1,17 @@
 package com.example.spring_project.services.impl;
 
 import com.example.spring_project.models.User;
+import com.example.spring_project.models.requests.RegisterRequest;
 import com.example.spring_project.repositories.UserRepository;
 import com.example.spring_project.services.UserService;
 import com.example.spring_project.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,6 +49,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmailAddress(String email) {
         return userRepository.findByEmailAddress(email);
+    }
+
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
+        if (userRepository.existsByEmailAddress(registerRequest.getEmail())){
+            return ResponseEntity
+                    .badRequest()
+                    .body("user exists already");
+        }
+
+        User user = new User(registerRequest.getUsername(), registerRequest.getEmail(),
+                passwordEncoder.encode(registerRequest.getPassword()));
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok("User created");
     }
 
 
