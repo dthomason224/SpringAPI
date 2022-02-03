@@ -10,8 +10,8 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
 
     @Override
-    public void createTag(Tag tag) {
-
+    public Tag createTag(Long id, Tag tag) {
+        return null;
     }
 
     @Override
