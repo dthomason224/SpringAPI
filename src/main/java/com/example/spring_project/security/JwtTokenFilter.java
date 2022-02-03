@@ -2,11 +2,11 @@ package com.example.spring_project.security;
 
 import com.example.spring_project.services.impl.MyUserDetailsService;
 import com.example.spring_project.utils.JwtUtils;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
@@ -28,7 +29,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     @Autowired
-    public void setMyUserDetailsService(MyUserDetailsService myUserDetailsService) {
+    public void setUserDetailsService(MyUserDetailsService myUserDetailsService) {
         this.myUserDetailsService = myUserDetailsService;
     }
 
@@ -40,8 +41,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
+        String header = request.getHeader("Authorization");
+
         try {
-            String header = request.getHeader("Authorization");
             if (header != null && header.startsWith("Bearer ")) {
                 jwt = header.substring(7);
                 username = jwtUtils.extractUsername(jwt);
@@ -49,19 +51,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                UserDetails userDetails = myUserDetailsService.loadUserByUsername(username);
+                UserDetails userDetails = this.myUserDetailsService.loadUserByUsername(username);
                 if (jwtUtils.validateJwtToken(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails.getUsername(),
-                                    userDetails.getPassword(),
-                                    userDetails.getAuthorities());
+                                    userDetails.getPassword());
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
-        } catch (ExpiredJwtException e) {
+        } catch (Exception e) {
+
         }
 
         filterChain.doFilter(request, response);

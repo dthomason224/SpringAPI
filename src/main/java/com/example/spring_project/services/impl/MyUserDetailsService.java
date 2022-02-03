@@ -1,5 +1,6 @@
 package com.example.spring_project.services.impl;
 
+import com.example.spring_project.exceptions.InformationNotFoundException;
 import com.example.spring_project.models.User;
 import com.example.spring_project.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findUserByEmailAddress(email);
+        if (user == null) {
+            throw new InformationNotFoundException("Username doesn't exist");
+        }
         return new MyUserDetails(user);
     }
 }

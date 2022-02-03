@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/tags")
+@RequestMapping(path = "/api")
 public class TagController {
     private TagServiceImpl tagService;
 
@@ -17,18 +17,28 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    @PostMapping()
-    public Tag createTag(Long id, @RequestBody Tag tag) {
-        return tagService.createTag(id, tag);
+    @PostMapping(path = "/tags/")
+    public Tag createTag(@RequestBody Tag tag) {
+        return tagService.createTag(tag);
     }
 
-    @DeleteMapping()
-    public void deleteImage(Long id) {
+    @DeleteMapping(path = "/tags/{tagId}/")
+    public void deleteImage(@PathVariable(value = "tagId") Long id) {
         tagService.deleteTag(id);
     }
 
-    @GetMapping
-    public List<Tag> getAllImages() {
-        return tagService.getTags();
+    @PutMapping(path = "/tags/{tagId}/")
+    public Tag updateTag(@PathVariable(value = "tagId") Long tagId, @RequestBody Tag possibleTag) {
+        return tagService.updateTag(tagId, possibleTag);
+    }
+
+    @GetMapping(path = "/tags/{tagId}/")
+    public Tag getTag(@PathVariable(value = "tagId") Long tagId) {
+        return tagService.getTag(tagId);
+    }
+
+    @GetMapping("/tags/")
+    public List<Tag> getAllTags() {
+        return tagService.getAllTags();
     }
 }

@@ -6,7 +6,9 @@ import com.example.spring_project.models.Tag;
 import java.util.List;
 
 public interface TagService {
-    Tag createTag(Long id, Tag tag);
+    Tag createTag(Tag tag);
+    Tag updateTag(Long id, Tag possibleTag);
     void deleteTag(Long id);
-    List<Tag> getTags();
+    Tag getTag(Long id);
+    List<Tag> getAllTags();
 }

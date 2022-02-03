@@ -3,6 +3,7 @@ package com.example.spring_project.security;
 import com.example.spring_project.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/login/")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
-        System.out.println("logged in");
+        System.out.println("logging in");
         return userService.loginUser(loginRequest);
     }
 }
