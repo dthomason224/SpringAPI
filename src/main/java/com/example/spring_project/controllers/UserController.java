@@ -1,6 +1,7 @@
 package com.example.spring_project.controllers;
 
 import com.example.spring_project.models.User;
+import com.example.spring_project.models.requests.LoginRequest;
 import com.example.spring_project.models.requests.RegisterRequest;
 import com.example.spring_project.services.UserService;
 import com.example.spring_project.services.impl.UserServiceImpl;
@@ -25,5 +26,11 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody RegisterRequest registerRequest) {
         System.out.println("created");
         return userService.registerUser(registerRequest);
+    }
+
+    @PostMapping("/login/")
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        System.out.println("logged in");
+        return userService.loginUser(loginRequest);
     }
 }

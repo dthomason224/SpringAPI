@@ -37,11 +37,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String emailAddress, String password, LocalDate createdAt) {
+    public User(String username, String emailAddress, String password) {
         this.username = username;
         this.emailAddress = emailAddress;
         this.password = password;
-        this.createdAt = createdAt;
     }
 
     public Long getId() {
