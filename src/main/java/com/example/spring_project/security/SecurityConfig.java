@@ -1,6 +1,6 @@
 package com.example.spring_project.security;
 
-import com.example.spring_project.services.MyUserDetailsService;
+import com.example.spring_project.services.impl.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,9 +1,5 @@
 package com.example.spring_project.models;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
 import javax.persistence.*;
 import java.util.List;
 

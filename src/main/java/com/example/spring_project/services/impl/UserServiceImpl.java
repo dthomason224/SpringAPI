@@ -5,7 +5,6 @@ import com.example.spring_project.models.requests.LoginRequest;
 import com.example.spring_project.models.requests.RegisterRequest;
 import com.example.spring_project.models.responses.LoginResponse;
 import com.example.spring_project.repositories.UserRepository;
-import com.example.spring_project.services.MyUserDetailsService;
 import com.example.spring_project.services.UserService;
 import com.example.spring_project.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;

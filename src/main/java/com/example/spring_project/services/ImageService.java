@@ -1,12 +1,13 @@
 package com.example.spring_project.services;
 
 import com.example.spring_project.models.Image;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 public interface ImageService {
-    public abstract void createImage(Image image);
-    public abstract void updateImage(Long id, Image image);
-    public abstract void deleteImage(Long id);
-    public abstract List<Image> getImages();
+    Image createImage(Long id, @RequestBody Image image);
+    Image updateImage(Long id, Image image);
+    void deleteImage(Long id);
+    List<Image> getImages();
 }

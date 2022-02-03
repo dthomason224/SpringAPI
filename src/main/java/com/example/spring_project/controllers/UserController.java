@@ -1,9 +1,7 @@
 package com.example.spring_project.controllers;
 
-import com.example.spring_project.models.User;
 import com.example.spring_project.models.requests.LoginRequest;
 import com.example.spring_project.models.requests.RegisterRequest;
-import com.example.spring_project.services.UserService;
 import com.example.spring_project.services.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
