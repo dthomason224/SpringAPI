@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "images")
@@ -26,6 +27,13 @@ public class Image {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "image_tags",
+            joinColumns = @JoinColumn(name = "image_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> imageTags;
 
     public Image() {
     }
