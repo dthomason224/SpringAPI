@@ -3,15 +3,12 @@ package com.example.spring_project.services.impl;
 import com.example.spring_project.exceptions.InformationExistsException;
 import com.example.spring_project.exceptions.InformationNotFoundException;
 import com.example.spring_project.models.Image;
-import com.example.spring_project.models.Tag;
 import com.example.spring_project.repositories.ImageRepository;
 import com.example.spring_project.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ImageServiceImpl implements ImageService {

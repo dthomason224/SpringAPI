@@ -21,13 +21,14 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag createTag(Tag tag) {
-        Tag possibleTag = tagRepository.findByName(tag.getName());
+        Tag possibleTag = tagRepository.findTagByName(tag.getName());
 
         if (possibleTag != null) {
             throw new InformationExistsException("Tag exists");
         }
         else {
-            return tagRepository.save(possibleTag);
+            tag.setName(tag.getName());
+            return tagRepository.save(tag);
         }
     }
 

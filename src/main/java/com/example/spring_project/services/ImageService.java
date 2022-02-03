@@ -1,7 +1,6 @@
 package com.example.spring_project.services;
 
 import com.example.spring_project.models.Image;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
