@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/images")
+@RequestMapping(path = "/api")
 public class ImageController {
     private ImageServiceImpl imageService;
 
@@ -17,23 +17,28 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping()
+    @PostMapping(path = "/images/")
     public Image createImage(Long id, @RequestBody Image image) {
         return imageService.createImage(id, image);
     }
 
-    @PutMapping()
-    public Image updateImage(Long id, @RequestBody Image image) {
+    @PutMapping(path = "/images/{imageId}/")
+    public Image updateImage(@PathVariable(value = "imageId") Long id, @RequestBody Image image) {
         return imageService.updateImage(id, image);
     }
 
-    @DeleteMapping()
-    public void deleteImage(Long id) {
+    @DeleteMapping(path = "/images/{imageId}/")
+    public void deleteImage(@PathVariable(value = "imageId") Long id) {
         imageService.deleteImage(id);
     }
 
-    @GetMapping
+    @GetMapping(path = "/images/{imageId}/")
+    public Image getImage(@PathVariable(value = "imageId") Long id) {
+        return imageService.getImage(id);
+    }
+
+    @GetMapping(path = "/images/")
     public List<Image> getAllImages() {
-        return imageService.getImages();
+        return imageService.getAllImages();
     }
 }

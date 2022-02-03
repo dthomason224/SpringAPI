@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface ImageService {
-    Image createImage(Long id, @RequestBody Image image);
+    Image createImage(Long id, Image image);
     Image updateImage(Long id, Image image);
     void deleteImage(Long id);
-    List<Image> getImages();
+    Image getImage(Long id);
+    List<Image> getAllImages();
 }
