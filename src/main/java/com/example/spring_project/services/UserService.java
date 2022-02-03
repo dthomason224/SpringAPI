@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface UserService {
-    public abstract User findUserByEmailAddress(String email);
+    User findUserByEmailAddress(String email);
 
-    public abstract ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest);
+    ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest);
 
-    public abstract  ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest);
+    ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest);
 }

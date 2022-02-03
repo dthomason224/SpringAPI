@@ -9,6 +9,9 @@ import java.util.HashSet;
 
 public class MyUserDetails implements UserDetails {
     private User user;
+    private String userName;
+    private String password;
+    private String emailAddress;
 
     public MyUserDetails(User user) {
         this.user = user;

@@ -5,7 +5,6 @@ import com.example.spring_project.models.requests.LoginRequest;
 import com.example.spring_project.models.requests.RegisterRequest;
 import com.example.spring_project.models.responses.LoginResponse;
 import com.example.spring_project.repositories.UserRepository;
-import com.example.spring_project.security.MyUserDetails;
 import com.example.spring_project.services.MyUserDetailsService;
 import com.example.spring_project.services.UserService;
 import com.example.spring_project.utils.JwtUtils;
@@ -13,19 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-    private UserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private JwtUtils jwtUtils;
@@ -41,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
+    public void setUserDetailsService(MyUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -82,14 +77,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-        MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
+        String jwt = jwtUtils.generateJwtToken(userDetails);
 
-        return ResponseEntity.ok(new LoginResponse(jwt, userDetails.getUsername()));
+        return ResponseEntity.ok(new LoginResponse(jwt));
     }
 }
