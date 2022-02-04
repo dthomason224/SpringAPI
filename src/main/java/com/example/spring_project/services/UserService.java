@@ -12,4 +12,6 @@ public interface UserService {
     ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest);
 
     ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest);
+
+    User addProfileToUser(Long userId, Long profileId);
 }

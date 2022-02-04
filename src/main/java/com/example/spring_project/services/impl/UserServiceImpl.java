@@ -1,9 +1,12 @@
 package com.example.spring_project.services.impl;
 
+import com.example.spring_project.exceptions.InformationNotFoundException;
 import com.example.spring_project.models.User;
+import com.example.spring_project.models.UserProfile;
 import com.example.spring_project.models.requests.LoginRequest;
 import com.example.spring_project.models.requests.RegisterRequest;
 import com.example.spring_project.models.responses.LoginResponse;
+import com.example.spring_project.repositories.UserProfileRepository;
 import com.example.spring_project.repositories.UserRepository;
 import com.example.spring_project.services.UserService;
 import com.example.spring_project.utils.JwtUtils;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+    private UserProfileRepository userProfileRepository;
     private MyUserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
@@ -32,6 +36,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     public void setUserRepository(UserRepository userRepository){
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setUserProfileRepository(UserProfileRepository userProfileRepository) {
+        this.userProfileRepository = userProfileRepository;
     }
 
     @Autowired
@@ -83,5 +92,22 @@ public class UserServiceImpl implements UserService {
         String jwt = jwtUtils.generateJwtToken(userDetails);
 
         return ResponseEntity.ok(new LoginResponse(jwt));
+    }
+
+    @Override
+    public User addProfileToUser(Long userId, Long profileId) {
+        UserProfile userProfile = userProfileRepository.findUserProfileById(profileId);
+        if (userProfile == null) {
+            throw new InformationNotFoundException("User Profile id " + profileId + "not found.");
+        }
+
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new InformationNotFoundException("User id " + userId + "not found.");
+        }
+
+        user.setUserProfile(userProfile);
+
+        return userRepository.saveAndFlush(user);
     }
 }
