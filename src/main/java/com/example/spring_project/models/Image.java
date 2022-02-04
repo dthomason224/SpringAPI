@@ -1,12 +1,11 @@
 package com.example.spring_project.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "images")
@@ -35,7 +34,7 @@ public class Image {
             name = "image_tags",
             joinColumns = @JoinColumn(name = "image_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private List<Tag> imageTags;
+    private Set<Tag> imageTags;
 
     public Image() {
     }
@@ -87,11 +86,11 @@ public class Image {
         this.user = user;
     }
 
-    public List<Tag> getImageTags() {
+    public Set<Tag> getImageTags() {
         return imageTags;
     }
 
-    public void setImageTags(List<Tag> imageTags) {
+    public void setImageTags(Set<Tag> imageTags) {
         this.imageTags = imageTags;
     }
 }
