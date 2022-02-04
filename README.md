@@ -11,9 +11,9 @@ copies that other users can save to edit freely.
 - Given that I am a unregistered user when I sign up the system should ask for information
 and send a request to validate account creation.
 
-- [ ] As a logged in user I want to be able to post a new item for others to see.
+- [x] As a user I want to be able to post a new item for others to see.
 
-- [ ] As a logged in user I want to be able to delete images that I have created.
+- [x] As a user I want to be able to delete images that I have created.
 
 - [x] As a user I want to be able to add new tags to the images I create.
 
@@ -60,3 +60,5 @@ levels. When trying to authenticate a user in the login endpoint I would always 
 I believe that I setup the token creation correctly, and have the correct endpoints in the security config. I think it might have something to do with 
 authorization. That's why most of the API endpoints the involve using a user are public so that I could use and test them.
 ## Future
+For the future I would like to full implement roles to the users. That also may fixe the JPA token. I would also like to work on a front-end 
+that could use the endpoints.
