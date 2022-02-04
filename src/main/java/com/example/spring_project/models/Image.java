@@ -1,8 +1,10 @@
 package com.example.spring_project.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +20,7 @@ public class Image {
     private String title;
 
     @Column
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Column
     private Long views;
@@ -38,7 +40,7 @@ public class Image {
     public Image() {
     }
 
-    public Image(Long id, String title, LocalDateTime createdAt, Long views) {
+    public Image(Long id, String title, LocalDate createdAt, Long views) {
         this.id = id;
         this.title = title;
         this.createdAt = createdAt;
@@ -61,11 +63,11 @@ public class Image {
         this.title = title;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 

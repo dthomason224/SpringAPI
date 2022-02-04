@@ -25,13 +25,9 @@ public class ImageServiceImpl implements ImageService {
 
         if (possibleImage != null) {
             throw new InformationExistsException("Image already exists");
+        } else {
+            return imageRepository.save(image);
         }
-
-        possibleImage.setTitle(image.getTitle());
-        possibleImage.setCreatedAt(image.getCreatedAt());
-        possibleImage.setViews(image.getViews());
-
-        return imageRepository.save(possibleImage);
     }
 
     @Override
@@ -57,7 +53,7 @@ public class ImageServiceImpl implements ImageService {
             throw new InformationNotFoundException("image id " + id + "not found.");
         }
         else {
-            imageRepository.deleteImageById(id);
+            imageRepository.deleteById(id);
         }
     }
 

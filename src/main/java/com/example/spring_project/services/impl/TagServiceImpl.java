@@ -53,7 +53,7 @@ public class TagServiceImpl implements TagService {
             throw new InformationNotFoundException("Tag id " + id + "not found.");
         }
         else {
-            tagRepository.deleteTagById(id);
+            tagRepository.deleteById(id);
         }
     }
 
