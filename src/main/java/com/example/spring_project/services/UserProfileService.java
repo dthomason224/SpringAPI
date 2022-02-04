@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserProfileService {
     UserProfile createUserProfile(UserProfile userProfile);
-    UserProfile updateProfile(Long id, UserProfile userProfile);
+    UserProfile updateUserProfile(Long id, UserProfile userProfile);
     void deleteUserProfile(Long id);
     UserProfile getUserProfile(Long id);
 }

@@ -31,8 +31,8 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public UserProfile updateProfile(Long id, UserProfile userProfile) {
-        UserProfile possibleUserProfile = userProfileRepository.findUserProfileById(userProfile.getId());
+    public UserProfile updateUserProfile(Long id, UserProfile userProfile) {
+        UserProfile possibleUserProfile = userProfileRepository.findUserProfileById(id);
 
         if (possibleUserProfile == null) {
             throw new InformationNotFoundException("User profile does not exist");
