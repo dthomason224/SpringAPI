@@ -10,5 +10,6 @@ public interface ImageService {
     Image updateImage(Long id, Image image);
     void deleteImage(Long id);
     Image getImage(Long id);
+    Image addUserToImage(Long id, Long userId);
     List<Image> getAllImages();
 }

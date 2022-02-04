@@ -48,4 +48,9 @@ public class UserProfileController {
                               @PathVariable(value = "profileId") Long userProfileId) {
         return userService.addProfileToUser(id, userProfileId);
     }
+
+    @GetMapping(path = "/{userId}/")
+    public User getUser(@PathVariable(value = "userId") Long id) {
+        return userService.findUserById(id);
+    }
 }

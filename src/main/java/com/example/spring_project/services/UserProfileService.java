@@ -1,9 +1,6 @@
 package com.example.spring_project.services;
 
-import com.example.spring_project.models.Tag;
 import com.example.spring_project.models.UserProfile;
-
-import java.util.List;
 
 public interface UserProfileService {
     UserProfile createUserProfile(UserProfile userProfile);

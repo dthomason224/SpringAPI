@@ -47,4 +47,10 @@ public class ImageController {
     public List<Image> getAllImages() {
         return imageService.getAllImages();
     }
+
+    @PostMapping(path = "/user/{userId}/image/{imageId}/")
+    public Image addUserToUser(@PathVariable(value = "imageId") Long id,
+                              @PathVariable(value = "userId") Long userId) {
+        return imageService.addUserToImage(id, userId);
+    }
 }

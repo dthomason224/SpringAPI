@@ -4,8 +4,10 @@ import com.example.spring_project.exceptions.InformationExistsException;
 import com.example.spring_project.exceptions.InformationNotFoundException;
 import com.example.spring_project.models.Image;
 import com.example.spring_project.models.Tag;
+import com.example.spring_project.models.User;
 import com.example.spring_project.repositories.ImageRepository;
 import com.example.spring_project.repositories.TagRepository;
+import com.example.spring_project.repositories.UserRepository;
 import com.example.spring_project.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,8 @@ import java.util.List;
 @Service
 public class ImageServiceImpl implements ImageService {
     private ImageRepository imageRepository;
-
     private TagRepository tagRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public void setImageRepository(ImageRepository imageRepository) {
@@ -26,6 +28,11 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     public void setTagRepository(TagRepository tagRepository) {
         this.tagRepository = tagRepository;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -94,6 +101,23 @@ public class ImageServiceImpl implements ImageService {
         } else {
             return image;
         }
+    }
+
+    @Override
+    public Image addUserToImage(Long id, Long userId) {
+        Image image = imageRepository.findImageById(id);
+        if (image == null) {
+            throw new InformationNotFoundException("Image id of" + id + "not found.");
+        }
+
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new InformationNotFoundException("User id of" + id + "not found.");
+        }
+
+        image.setUser(user);
+
+        return imageRepository.save(image);
     }
 
     @Override

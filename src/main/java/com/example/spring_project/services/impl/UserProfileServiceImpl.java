@@ -2,7 +2,6 @@ package com.example.spring_project.services.impl;
 
 import com.example.spring_project.exceptions.InformationExistsException;
 import com.example.spring_project.exceptions.InformationNotFoundException;
-import com.example.spring_project.models.Tag;
 import com.example.spring_project.models.UserProfile;
 import com.example.spring_project.repositories.UserProfileRepository;
 import com.example.spring_project.services.UserProfileService;

@@ -64,6 +64,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserById(Long id) {
+        User user = userRepository.findUserById(id);
+        if (user == null) {
+            throw new InformationNotFoundException("User id " + id + "not found.");
+        } else {
+            return user;
+        }
+    }
+
+    @Override
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
         if (userRepository.existsByEmailAddress(registerRequest.getEmail())){
             return ResponseEntity

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserService {
     User findUserByEmailAddress(String email);
 
+    User findUserById(Long id);
+
     ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest);
 
     ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest);
