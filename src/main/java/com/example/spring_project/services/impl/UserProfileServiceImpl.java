@@ -1,5 +1,7 @@
 package com.example.spring_project.services.impl;
 
+import com.example.spring_project.exceptions.InformationExistsException;
+import com.example.spring_project.exceptions.InformationNotFoundException;
 import com.example.spring_project.models.Tag;
 import com.example.spring_project.models.UserProfile;
 import com.example.spring_project.repositories.UserProfileRepository;
@@ -17,22 +19,51 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public Tag createUserProfile(UserProfile userProfile) {
-        return null;
+    public UserProfile createUserProfile(UserProfile userProfile) {
+        UserProfile possibleUserProfile = userProfileRepository.findUserProfileById(userProfile.getId());
+
+        if (possibleUserProfile != null) {
+            throw new InformationExistsException("User profile exists");
+        }
+        else {
+            return userProfileRepository.save(userProfile);
+        }
     }
 
     @Override
-    public Tag updateProfile(Long id, UserProfile userProfile) {
-        return null;
+    public UserProfile updateProfile(Long id, UserProfile userProfile) {
+        UserProfile possibleUserProfile = userProfileRepository.findUserProfileById(userProfile.getId());
+
+        if (possibleUserProfile == null) {
+            throw new InformationNotFoundException("User profile does not exist");
+        }
+        else {
+            possibleUserProfile.setFirstName(userProfile.getFirstName());
+            possibleUserProfile.setLastName(userProfile.getLastName());
+            return userProfileRepository.save(possibleUserProfile);
+        }
     }
 
     @Override
     public void deleteUserProfile(Long id) {
+        UserProfile possibleUserProfile = userProfileRepository.findUserProfileById(id);
 
+        if (possibleUserProfile == null) {
+            throw new InformationNotFoundException("User profile does not exist");
+        }
+        else {
+            userProfileRepository.deleteById(id);
+        }
     }
 
     @Override
-    public Tag getUserProfile(Long id) {
-        return null;
+    public UserProfile getUserProfile(Long id) {
+        UserProfile userProfile = userProfileRepository.findUserProfileById(id);
+
+        if (userProfile == null) {
+            throw new InformationNotFoundException("User profile id of  " + id + "not found.");
+        } else {
+            return userProfile;
+        }
     }
 }
