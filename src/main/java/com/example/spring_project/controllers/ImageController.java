@@ -22,6 +22,12 @@ public class ImageController {
         return imageService.createImage(id, image);
     }
 
+    @PostMapping(path = "/images/{imageId}/tags/{tagId}/")
+    public void addTagToImage(@PathVariable(value = "imageId") Long id,
+                             @PathVariable(value = "tagId") Long tagId) {
+        imageService.addTagToImage(id, tagId);
+    }
+
     @PutMapping(path = "/images/{imageId}/")
     public Image updateImage(@PathVariable(value = "imageId") Long id, @RequestBody Image image) {
         return imageService.updateImage(id, image);

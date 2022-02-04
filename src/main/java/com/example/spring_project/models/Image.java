@@ -78,4 +78,20 @@ public class Image {
     public void setViews(Long views) {
         this.views = views;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Tag> getImageTags() {
+        return imageTags;
+    }
+
+    public void setImageTags(List<Tag> imageTags) {
+        this.imageTags = imageTags;
+    }
 }

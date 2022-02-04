@@ -3,7 +3,9 @@ package com.example.spring_project.services.impl;
 import com.example.spring_project.exceptions.InformationExistsException;
 import com.example.spring_project.exceptions.InformationNotFoundException;
 import com.example.spring_project.models.Image;
+import com.example.spring_project.models.Tag;
 import com.example.spring_project.repositories.ImageRepository;
+import com.example.spring_project.repositories.TagRepository;
 import com.example.spring_project.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,16 @@ import java.util.List;
 public class ImageServiceImpl implements ImageService {
     private ImageRepository imageRepository;
 
+    private TagRepository tagRepository;
+
     @Autowired
     public void setImageRepository(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
+    }
+
+    @Autowired
+    public void setTagRepository(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -28,6 +37,25 @@ public class ImageServiceImpl implements ImageService {
         } else {
             return imageRepository.save(image);
         }
+    }
+
+    @Override
+    public void addTagToImage(Long id, Long tagId) {
+        Image possibleImage = imageRepository.findImageById(id);
+        Tag possibleTag = tagRepository.findTagById(tagId);
+
+        if (possibleImage == null) {
+            throw new InformationNotFoundException("Image id of " + id + " does not exist");
+        }
+
+        if (possibleTag == null) {
+            throw new InformationNotFoundException("Tag id of " + tagId + " does not exist");
+        }
+
+        possibleImage.getImageTags().add(possibleTag);
+
+        imageRepository.flush();
+        tagRepository.flush();
     }
 
     @Override
@@ -50,7 +78,7 @@ public class ImageServiceImpl implements ImageService {
         Image image = imageRepository.findImageById(id);
 
         if (image == null) {
-            throw new InformationNotFoundException("image id " + id + "not found.");
+            throw new InformationNotFoundException("image id of" + id + "not found.");
         }
         else {
             imageRepository.deleteById(id);
@@ -62,7 +90,7 @@ public class ImageServiceImpl implements ImageService {
         Image image = imageRepository.findImageById(id);
 
         if (image == null) {
-            throw new InformationNotFoundException("Image id " + id + "not found.");
+            throw new InformationNotFoundException("Image id of" + id + "not found.");
         } else {
             return image;
         }
